@@ -20,7 +20,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 @Entity
 public class Person implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private Integer id;
