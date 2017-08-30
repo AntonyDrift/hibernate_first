@@ -1,8 +1,9 @@
 package by.it.loader;
-import by.it.pojos.Person;
-import by.it.util.HibernateUtil;
 
 import javax.persistence.EntityManager;
+
+import by.it.util.HibernateUtil;
+import by.it.pojos.Person;
 
 public class PersonLoader {
     public static void main(String[] args) throws Exception {
