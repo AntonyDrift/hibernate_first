@@ -6,6 +6,7 @@
     <version>1.0</version>
     <modules>
         <module>lecture_1</module>
+        <module>lecture_2_Operations</module>
     </modules>
     <packaging>pom</packaging>
 
