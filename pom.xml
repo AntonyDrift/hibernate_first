@@ -8,24 +8,10 @@
         <module>lecture_1</module>
     </modules>
     <packaging>pom</packaging>
+
     <name>hibernate-lectures</name>
     <build>
         <finalName>hibernate-lectures</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>by.it.PersonLoader</mainClass>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>lib/</classpathPrefix>
-                        </manifest>
-                    </archive>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
     <properties>
         <hibernate.version>5.2.10.Final</hibernate.version>
