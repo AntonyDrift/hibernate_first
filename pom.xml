@@ -7,6 +7,8 @@
     <modules>
         <module>lecture_1</module>
         <module>lecture_2_Operations</module>
+        <module>lecture_3_mapping</module>
+        <module>lecture_5_hql</module>
     </modules>
     <packaging>pom</packaging>
 

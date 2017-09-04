@@ -66,7 +66,9 @@ public class HibernateUtil {
     }
 
     public static void close() {
-        emFactory.close();
+        if (emFactory != null) {
+            emFactory.close();
+        }
     }
 
     public static Session getSession() {
