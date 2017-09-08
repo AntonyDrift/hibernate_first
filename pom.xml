@@ -8,7 +8,12 @@
         <module>lecture_1</module>
         <module>lecture_2_Operations</module>
         <module>lecture_3_mapping</module>
-        <module>lecture_5_hql</module>
+        <module>lecture_4_inheritance</module>
+        <module>lecture_5_relations</module>
+        <module>lecture_6_hql</module>
+        <module>lecture_7_jpql</module>
+        <module>lecture_8_criteria</module>
+        <module>lecture_9_cache</module>
     </modules>
     <packaging>pom</packaging>
 

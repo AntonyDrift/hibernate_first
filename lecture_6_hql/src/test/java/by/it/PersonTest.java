@@ -1,13 +1,14 @@
 package by.it;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-import org.hibernate.HibernateException;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Test;
 
-import by.it.pojos.Person;
+import by.it.entity.Person;
 import by.it.util.HibernateUtil;
 
 /**
@@ -17,23 +18,18 @@ import by.it.util.HibernateUtil;
  */
 public class PersonTest {
     @Test
-    public void saveTest() {
+    public void namedQueryTest() {
         Person person = new Person(null, 25, "Yuli", "Slabko");
         EntityManager em = HibernateUtil.getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.persist(person);
-            em.getTransaction().commit();
-        } catch (HibernateException e) {
-            em.getTransaction().rollback();
-        } finally {
-            em.close();
-        }
-
         em.getTransaction().begin();
-        Person personFromDb = em.find(Person.class, person.getId());
-        Assert.assertEquals(person, personFromDb);
+        em.persist(person);
         em.getTransaction().commit();
+        em.clear();
+
+        Query personByName = em.createNamedQuery("getPersonByName");
+        List personList = personByName.setParameter("name", "Yuli")
+                .getResultList();
+        personList.forEach(System.out::println);
     }
 
     @AfterClass
