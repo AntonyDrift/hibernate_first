@@ -38,6 +38,12 @@ public class Department implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return "Department{ departmentId=" + departmentId +
+                ", departmentName='" + departmentName + '}';
+    }
+
+    @Override
     public int hashCode() {
         int result = departmentId != null ? departmentId.hashCode() : 0;
         result = 31 * result + (departmentName != null ? departmentName.hashCode() : 0);

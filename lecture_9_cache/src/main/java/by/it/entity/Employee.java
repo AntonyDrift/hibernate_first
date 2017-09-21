@@ -29,8 +29,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor
-@Entity
-@Table(name="EMPLOYEE")
+@Entity @Table(name="EMPLOYEE")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Employee implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,20 +42,16 @@ public class Employee implements Serializable {
     private String lastname;
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-
     @OneToOne(mappedBy = "employee", cascade = CascadeType.PERSIST)
     private EmployeeDetail employeeDetail;
-
     @ManyToOne
     @JoinColumn(name = "DEPARTMENT_ID")
     private Department department;
-
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "EMPLOYEE_MEETING", joinColumns = {@JoinColumn(name = "EMPLOYEE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "MEETING_ID")}
     )
     private Set<Meeting> meetings = new HashSet<>(0);
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,7 +64,6 @@ public class Employee implements Serializable {
         if (lastname != null ? !lastname.equals(employee.lastname) : employee.lastname != null) return false;
         return date != null ? date.equals(employee.date) : employee.date == null;
     }
-
     @Override
     public int hashCode() {
         int result = employeeId != null ? employeeId.hashCode() : 0;
@@ -79,3 +73,4 @@ public class Employee implements Serializable {
         return result;
     }
 }
+

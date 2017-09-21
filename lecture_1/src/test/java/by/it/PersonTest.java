@@ -1,20 +1,12 @@
 package by.it;
 
 import javax.persistence.EntityManager;
-
 import org.hibernate.HibernateException;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
-
 import by.it.pojos.Person;
 import by.it.util.HibernateUtil;
-
-/**
- * Class PersonTest
- *
- * Created by yslabko on 08/30/2017.
- */
 public class PersonTest {
     @Test
     public void saveTest() {
@@ -35,7 +27,6 @@ public class PersonTest {
         Assert.assertEquals(person, personFromDb);
         em.getTransaction().commit();
     }
-
     @AfterClass
     public static void cleanUp() {
         HibernateUtil.close();

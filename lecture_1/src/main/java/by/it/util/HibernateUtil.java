@@ -16,3 +16,4 @@ public class HibernateUtil {
         emFactory.close();
     }
 }
+
