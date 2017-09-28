@@ -14,8 +14,11 @@ public class Employee extends DateEntity {
 
     @Override
     public String toString() {
-        return "Employee{id=" + getId() + ", name='" + name + ", company='" + company +
-                ", salary=" + salary + ", createdDate=" + getCreatedDate() + ", updatedDate=" + getUpdatedDate() +'}';
+        return "Employee{id=" + getId() + ", name='" + name +
+                ", company='" + company +
+                ", salary=" + salary + ", createdDate=" +
+                getCreatedDate() + ", updatedDate=" +
+                getUpdatedDate() +'}';
     }
 }
 
