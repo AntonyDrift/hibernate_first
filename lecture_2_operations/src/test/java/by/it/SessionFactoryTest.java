@@ -1,5 +1,6 @@
 package by.it;
 
+import by.it.util.SFUtil;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Assert;
@@ -7,7 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import by.it.entity.Person;
-import by.it.util.HibernateUtil;
+import by.it.util.EMUtil;
+
+import javax.persistence.EntityManager;
 
 /**
  * Class SessionFactoryTest
@@ -15,12 +18,11 @@ import by.it.util.HibernateUtil;
  * Created by yslabko on 08/30/2017.
  */
 public class SessionFactoryTest {
-
     private Person p;
 
     @Before
     public void init() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         p = new Person(null, 50, "Test", "Test");
         session.beginTransaction();
         session.save(p);
@@ -30,13 +32,13 @@ public class SessionFactoryTest {
 
     @Test
     public void saveTest() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         Assert.assertNotNull(session);
         Person person = new Person(null, 25, "Yuli", "Slabko");
         session.beginTransaction();
         session.save(person);
         session.getTransaction().commit();
-        session.clear();
+        session.evict(person);
 
         Person personFromDb = session.get(Person.class, person.getId());
         Assert.assertEquals(person, personFromDb);
@@ -46,7 +48,7 @@ public class SessionFactoryTest {
 
     @Test
     public void loadTest() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         Person loadedPerson = session.load(Person.class, 2);
         loadedPerson.getAge();
         session.close();
@@ -54,7 +56,7 @@ public class SessionFactoryTest {
 
     @Test
     public void lazyLoadTest() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         Person loadedPerson = session.load(Person.class, 2);
         session.clear();
         loadedPerson.getAge();
@@ -63,7 +65,7 @@ public class SessionFactoryTest {
 
     @Test
     public void getTest() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         Person loadedPerson = session.get(Person.class, 2);
         System.out.println(loadedPerson);
         session.close();
@@ -71,7 +73,7 @@ public class SessionFactoryTest {
 
     @Test
     public void isDirtyTest() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         Person loadedPerson = session.get(Person.class, p.getId());
         loadedPerson.setAge(555);
         System.out.println(session.isDirty());
@@ -80,7 +82,7 @@ public class SessionFactoryTest {
 
     @Test
     public void deleteTest() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         Person personForDelete = new Person(null, 100, "Deleted", "Man");
         System.out.println("Count before save " + session.createQuery("Select count(*) from Person").getSingleResult());
         session.beginTransaction();
@@ -95,7 +97,7 @@ public class SessionFactoryTest {
 
     @Test
     public void deleteExistedTest() {
-        Session session = HibernateUtil.getSession();
+        Session session = SFUtil.getSession();
         session.beginTransaction();
         Person personForDelete = session.get(Person.class, 1L);
         session.delete(personForDelete);
@@ -104,9 +106,19 @@ public class SessionFactoryTest {
         session.close();
     }
 
+    @Test
+    public void flushCommitTest() {
+        Session session = SFUtil.getSession();
+        Person person = new Person(null, 25, "Yuli", "Slabko");
+        session.beginTransaction();
+        session.save(person);
+        System.out.println("Person is persisted before commit.");
+        session.getTransaction().commit();
+        session.close();
+    }
+
     @After
     public void closeSessionFactory() {
-        HibernateUtil.getSession().delete(p);
-        HibernateUtil.closeSessionFactory();
+        SFUtil.getSession().delete(p);
     }
 }

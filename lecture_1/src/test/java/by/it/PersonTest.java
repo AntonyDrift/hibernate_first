@@ -19,9 +19,10 @@ public class PersonTest {
         } catch (HibernateException e) {
             em.getTransaction().rollback();
         } finally {
-            em.close();
+//            em.close();
         }
 
+//        em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
         Person personFromDb = em.find(Person.class, person.getId());
         Assert.assertEquals(person, personFromDb);
