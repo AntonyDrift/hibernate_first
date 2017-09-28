@@ -19,7 +19,7 @@ import by.it.util.EMUtil;
  *
  * Created by yslabko on 08/30/2017.
  */
-public class SingleTableTest {
+public class TablePerSubclassTest {
     @Test
     public void saveTest() {
         Person person = new Person(null, 25, "Yuli", "Slabko");
