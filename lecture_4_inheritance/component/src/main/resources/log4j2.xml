@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
+  <Root level="error">
+    <AppenderRef ref="Console"/>
+  </Root>
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="Hibernate -> %d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
+      <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n" />
     </Console>
   </Appenders>
 
   <Loggers>
-  <Root level="error">
-    <AppenderRef ref="Console"/>
-  </Root>
     <!-- Log everything in hibernate -->
     <Logger name="org.hibernate" level="error" additivity="false">
       <AppenderRef ref="Console" />

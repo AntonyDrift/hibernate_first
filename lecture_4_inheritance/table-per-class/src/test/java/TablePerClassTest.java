@@ -36,8 +36,8 @@ public class TablePerClassTest {
 
         em.getTransaction().begin();
         Person personFromDb = em.find(Person.class, person.getId());
-        Assert.assertEquals(person, personFromDb);
         em.getTransaction().commit();
+        Assert.assertEquals(person, personFromDb);
     }
 
     @AfterClass

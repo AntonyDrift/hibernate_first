@@ -11,12 +11,20 @@
     <packaging>pom</packaging>
 
     <name>lecture_4_inheritance</name>
-	
-	<modules>
+
+    <modules>
+        <module>component</module>
         <module>mapped-superclass</module>
         <module>single-table</module>
         <module>table-per-subclass</module>
         <module>table-per-class</module>
     </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+    </dependencies>
 
 </project>

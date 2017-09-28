@@ -1,19 +1,20 @@
 package by.it.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
 /**
- * Class Address
- * <p>
+ * Class FullName
+ *
  * Created by yslabko on 01/23/2017.
  */
 @Data
-@NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Embeddable
-public class Address {
-    private String street;
-    private String city;
+public class FullName {
+    private String firstName;
+    private String lastName;
 }
