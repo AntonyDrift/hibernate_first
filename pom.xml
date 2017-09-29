@@ -26,6 +26,7 @@
         <junit.version>4.12</junit.version>
         <h2.version>1.4.196</h2.version>
         <compiler.version>3.7.0</compiler.version>
+        <log4j.version>2.9.1</log4j.version>
     </properties>
     <build>
         <finalName>hibernate-lectures</finalName>
@@ -85,7 +86,11 @@
             <version>${h2.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
     </dependencies>
 </project>
 

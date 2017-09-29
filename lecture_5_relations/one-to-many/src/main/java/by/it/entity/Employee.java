@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -23,9 +20,9 @@ public class Employee implements Serializable {
     @Column(name = "EMPLOYEE_ID")
     private Long employeeId;
     @Column(name = "FIRST_NAME")
-    private String firstname;
+    private String firstName;
     @Column(name = "LAST_NAME")
-    private String lastname;
+    private String lastName;
     @CreationTimestamp
     private LocalDateTime date;
 
@@ -42,16 +39,16 @@ public class Employee implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
         if (employeeId != null ? !employeeId.equals(employee.employeeId) : employee.employeeId != null) return false;
-        if (firstname != null ? !firstname.equals(employee.firstname) : employee.firstname != null) return false;
-        if (lastname != null ? !lastname.equals(employee.lastname) : employee.lastname != null) return false;
+        if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(employee.lastName) : employee.lastName != null) return false;
         return date != null ? date.equals(employee.date) : employee.date == null;
     }
 
     @Override
     public int hashCode() {
         int result = employeeId != null ? employeeId.hashCode() : 0;
-        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
@@ -60,8 +57,8 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
                 "employeeId=" + employeeId +
-                ", firstName='" + firstname + '\'' +
-                ", lastName='" + lastname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }

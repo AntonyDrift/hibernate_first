@@ -1,38 +1,38 @@
 package by.it.entity;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
-
-import static javax.persistence.GenerationType.IDENTITY;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name="EMPLOYEE")
 public class Employee implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @Id @GeneratedValue
     @Column(name = "EMPLOYEE_ID", unique = true)
-    @Access(AccessType.PROPERTY)
     private Long employeeId;
-
     @Column(name = "FIRST_NAME")
-    private String firstname;
-
+    private String firstName;
     @Column(name = "LAST_NAME")
-    private String lastname;
+    private String lastName;
+    @CreationTimestamp
+    private LocalDateTime date;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
-
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", cascade = CascadeType.REMOVE)
-    @Access(AccessType.PROPERTY)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private EmployeeDetail employeeDetail;
 }
