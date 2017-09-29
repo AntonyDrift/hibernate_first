@@ -8,8 +8,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>lecture_5_relations</artifactId>
-    <packaging>jar</packaging>
-
+    <packaging>pom</packaging>
     <name>lecture_5_relations</name>
+    <modules>
+        <module>one-to-one</module>
+		<module>one-to-many</module>
+		<module>many-to-many</module>
+    </modules>
 
 </project>

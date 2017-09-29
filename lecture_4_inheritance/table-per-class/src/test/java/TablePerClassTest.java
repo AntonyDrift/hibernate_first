@@ -1,18 +1,12 @@
-import static org.junit.Assert.assertTrue;
-
-import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
-
-import org.hibernate.FlushMode;
-import org.hibernate.Session;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Test;
-
 import by.it.entity.Employee;
 import by.it.entity.Person;
 import by.it.entity.Student;
 import by.it.util.EMUtil;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Test;
+
+import javax.persistence.EntityManager;
 
 /**
  * Class PersonEntityManagerTest

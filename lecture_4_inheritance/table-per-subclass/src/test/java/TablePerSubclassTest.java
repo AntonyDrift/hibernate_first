@@ -3,6 +3,7 @@ import static org.junit.Assert.assertTrue;
 import javax.persistence.EntityManager;
 import javax.persistence.FlushModeType;
 
+import by.it.entity.Personable;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.junit.AfterClass;
@@ -13,6 +14,8 @@ import by.it.entity.Employee;
 import by.it.entity.Person;
 import by.it.entity.Student;
 import by.it.util.EMUtil;
+
+import java.util.List;
 
 /**
  * Class PersonEntityManagerTest

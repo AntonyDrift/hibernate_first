@@ -3,6 +3,8 @@ package by.it.entity;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Polymorphism;
+import org.hibernate.annotations.PolymorphismType;
 
 import javax.persistence.*;
 
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "EMPLOYEE")
 @PrimaryKeyJoinColumn(name="PERSON_ID")
+@Polymorphism(type = PolymorphismType.EXPLICIT)
 public class Employee extends Person {
     private String company;
     private Double salary;
