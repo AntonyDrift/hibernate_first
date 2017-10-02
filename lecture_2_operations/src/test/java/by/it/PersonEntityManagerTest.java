@@ -48,9 +48,9 @@ public class PersonEntityManagerTest {
     public void flushAutoNativeSqlTest() {
         EntityManager entityManager = EMUtil.getEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.createNativeQuery( "select count(*) from Person" ).getSingleResult();
+        System.out.println(entityManager.createNativeQuery( "select count(*) from Person" ).getSingleResult());
         entityManager.persist(new Person(null, 25, "Yuli", "Slabko"));
-        entityManager.createNativeQuery( "select count(*) from Person" ).getSingleResult();
+        System.out.println(entityManager.createNativeQuery( "select count(*) from Person" ).getSingleResult());
         entityManager.getTransaction().commit();
         entityManager.close();
     }
@@ -58,11 +58,26 @@ public class PersonEntityManagerTest {
     public void flushCommitJPQLTest() {
         EntityManager entityManager = EMUtil.getEntityManager();
         entityManager.getTransaction().begin();
-        entityManager.persist(new Person(null, 25, "Yuli", "Slabko"));
+        Person person = new Person(null, 25, "Yuli", "Slabko");
+        entityManager.persist(person);
+        person.setAge(300);
+        entityManager.merge(person);
         entityManager.createQuery( "select d from Department d" )
                 .setFlushMode(FlushModeType.COMMIT)
                 .getResultList();
         entityManager.createQuery( "select p from Person p" )
+                .setFlushMode(FlushModeType.COMMIT)
+                .getResultList();
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    @Test
+    public void flushCommitNativeSQLTest() {
+        EntityManager entityManager = EMUtil.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(new Person(null, 25, "Yuli", "Slabko"));
+        entityManager.createNativeQuery( "select * from Person" )
                 .setFlushMode(FlushModeType.COMMIT)
                 .getResultList();
         entityManager.getTransaction().commit();
@@ -73,7 +88,7 @@ public class PersonEntityManagerTest {
         EntityManager entityManager = EMUtil.getEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(new Person(null, 25, "Yuli", "Slabko"));
-        entityManager.flush();
+//        entityManager.flush();
         Session session = entityManager.unwrap( Session.class);
         session.setHibernateFlushMode( FlushMode.MANUAL );
         assertTrue(((Number) entityManager

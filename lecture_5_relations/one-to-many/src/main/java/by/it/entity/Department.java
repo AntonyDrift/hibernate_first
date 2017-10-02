@@ -23,7 +23,7 @@ public class Department {
     @Column(name = "NAME")
     private String departmentName;
     @OneToMany(mappedBy = "department")
-//    @BatchSize(size = 3)
+    @BatchSize(size = 3)
     private Set<Employee> employees = new HashSet<>(0);
 
     public Department(String name) {

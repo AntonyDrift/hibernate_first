@@ -72,6 +72,7 @@ public class OneToManyTest {
         em.persist(new Employee(null, "Paul", "Knuth", null, null, sd));
         em.getTransaction().commit();
         em.clear();
+        System.out.println(em.find(Department.class, 1L));
         List<Department> departments = em.createQuery(
                 "select d from Department d " +
                         "inner join d.employees e " +
