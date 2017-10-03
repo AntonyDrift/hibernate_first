@@ -15,7 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Data @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name="EMPLOYEE")
-public class Employee implements Serializable {
+public class Employee {
     @Id @GeneratedValue
     @Column(name = "EMPLOYEE_ID", unique = true)
     private Long employeeId;

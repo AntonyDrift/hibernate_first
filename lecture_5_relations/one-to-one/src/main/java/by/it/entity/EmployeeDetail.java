@@ -25,7 +25,6 @@ public class EmployeeDetail implements Serializable {
             parameters = @Parameter(name = "property", value = "employee"))
     @GeneratedValue(generator = "one-one")
     @Column(name = "EMPLOYEE_ID")
-    @Access(AccessType.PROPERTY)
     private Long id;
 
     @Column(name = "STREET")

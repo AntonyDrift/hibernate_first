@@ -50,6 +50,7 @@ public class SessionFactoryTest {
     public void loadTest() {
         Session session = SFUtil.getSession();
         Person loadedPerson = session.load(Person.class, 2);
+        session.update(loadedPerson);
         loadedPerson.getAge();
         session.close();
     }

@@ -29,8 +29,14 @@ public class ElementCollectionTest {
     public void saveTest() {
         EntityManager em = EMUtil.getEntityManager("by.it");
         em.getTransaction().begin();
-        User user = new User(null, "Tim", Stream.of("Cat", "Dog").collect(Collectors.toList()));
+        User user = new User(null, "Tim", Stream.of("Cat", "Dog", "Cat").collect(Collectors.toList()));
         em.persist(user);
+        em.getTransaction().commit();
+        em.clear();
+        em.merge(user);
+        em.getTransaction().begin();
+        user.getPets().remove(0);
+        em.merge(user);
         em.getTransaction().commit();
         em.clear();
         user = em.find(User.class, 1l);

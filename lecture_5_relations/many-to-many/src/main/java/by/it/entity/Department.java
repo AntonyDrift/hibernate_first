@@ -17,7 +17,7 @@ import java.util.Set;
 @Table(name = "DEPARTMENT")
 public class Department implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name = "DEPARTMENT_ID", unique = true)
     private Long departmentId;
     @Column(name = "NAME")

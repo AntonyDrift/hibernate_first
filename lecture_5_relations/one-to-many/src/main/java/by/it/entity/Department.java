@@ -9,7 +9,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,9 +24,9 @@ public class Department {
     private Long departmentId;
     @Column(name = "NAME")
     private String departmentName;
-    @OneToMany(mappedBy = "department")
-    @BatchSize(size = 3)
-    private Set<Employee> employees = new HashSet<>(0);
+    @OneToMany(mappedBy = "department", orphanRemoval = true, cascade = CascadeType.REMOVE)
+//    @BatchSize(size = 3)
+    private List<Employee> employees = new ArrayList<>(0);
 
     public Department(String name) {
         this.departmentName = name;

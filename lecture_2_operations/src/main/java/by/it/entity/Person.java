@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Entity
-public class Person implements Serializable {
+public class Person {
     @Id
     @GeneratedValue
     private Integer id;

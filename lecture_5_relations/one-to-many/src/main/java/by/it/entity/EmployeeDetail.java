@@ -8,6 +8,7 @@ import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -32,7 +33,7 @@ public class EmployeeDetail {
     @Column(name = "COUNTRY")
     private String country;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @PrimaryKeyJoinColumn
     private Employee employee;
 }

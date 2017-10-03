@@ -40,6 +40,9 @@ public class OneToOneTest {
         em.clear();
         Employee employeeFromDb = em.find(Employee.class, 1L);
         Assert.assertEquals(employee.getFirstName(), employeeFromDb.getFirstName());
+        em.getTransaction().begin();
+        em.remove(employeeFromDb);
+        em.getTransaction().commit();
     }
 
     @Test

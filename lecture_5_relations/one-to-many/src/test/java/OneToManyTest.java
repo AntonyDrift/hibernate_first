@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -56,9 +57,12 @@ public class OneToManyTest {
         em.persist(department);
         Employee employee = new Employee(null, "Yulij", "Slabko", null, null, department);
         EmployeeDetail employeeDetail = new EmployeeDetail(null, "Sadovaya", "Minsk", "", "Belarus", employee);
+        employee.setEmployeeDetail(employeeDetail);
         em.persist(employee);
-        em.persist(employeeDetail);
         em.getTransaction().commit();
+        em.clear();
+        department.getEmployees().remove(0);
+        em.merge(department);
         em.close();
     }
 

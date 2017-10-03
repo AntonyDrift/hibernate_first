@@ -32,7 +32,7 @@ public class Employee implements Serializable {
     @CreationTimestamp
     private LocalDateTime date;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee",
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToOne(mappedBy = "employee",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private EmployeeDetail employeeDetail;
 }
