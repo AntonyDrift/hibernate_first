@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -29,12 +30,14 @@ public class EmployeeTest {
         EntityManager em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
         Department d = new Department("D");
+        em.persist(d);
         em.persist(new Employee(null, "Yuli", 27, 16000.99, d));
         em.persist(new Employee(null, "Max", 38, 10000, d));
         em.persist(new Employee(null, "Paul", 43, 15000, d));
         em.persist(new Employee(null, "Gleb", 37, 15000, d));
         em.persist(new Employee(null, "Li", 62, 13099, d));
         em.persist(new Employee(null, "Alex", 22, 4500, d));
+        em.persist(new Employee(null, null, 18, 300, d));
         em.getTransaction().commit();
         em.clear();
     }
@@ -44,8 +47,7 @@ public class EmployeeTest {
         EntityManager em = HibernateUtil.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Employee> criteria = cb.createQuery(Employee.class);
-        Root<Employee> employeeRoot = criteria.from(Employee.class);
-        criteria.select(employeeRoot);
+        criteria.from(Employee.class);
         List<Employee> employees = em.createQuery(criteria).getResultList();
         employees.forEach(System.out::println);
     }
@@ -105,7 +107,7 @@ public class EmployeeTest {
         CriteriaQuery<Employee> criteria = cb.createQuery(Employee.class);
         Root<Employee> emp = criteria.from(Employee.class);
         criteria.select(emp)
-                .where(cb.between(emp.get("age"), 20, 50));
+                .where(cb.between(emp.get("age"), 35, 50));
         List<Employee> employees = em.createQuery(criteria).getResultList();
         employees.forEach(System.out::println);
     }
@@ -130,6 +132,24 @@ public class EmployeeTest {
         CriteriaQuery<Employee> criteria = cb.createQuery(Employee.class);
         Root<Employee> emp = criteria.from(Employee.class);
         Predicate predicate = cb.and(
+                cb.like(emp.get("name"), "%ul%"),
+                cb.gt(emp.get("age"), 30)
+        );
+        criteria.select(emp).where(predicate);
+
+        List<Employee> employees = em.createQuery(criteria).getResultList();
+        employees.forEach(System.out::println);
+    }
+
+    @Test
+    public void logicalDisjunctionPredicateTest() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteria = cb.createQuery(Employee.class);
+        Root<Employee> emp = criteria.from(Employee.class);
+        Expression<Integer> age = emp.get("age");
+        Predicate predicate = cb.and(
+                cb.or(age.in(24, 28, 35), cb.equal(emp.get("name"), "Yulij")),
                 cb.like(emp.get("name"), "%ul%"),
                 cb.gt(emp.get("age"), 30)
         );
@@ -225,7 +245,7 @@ public class EmployeeTest {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Double> criteria = cb.createQuery(Double.class);
         criteria.select(cb.sum(criteria.from(Employee.class).get("salary")));
-        double count =  em.createQuery(criteria).getSingleResult();
+        Number count =  em.createQuery(criteria).getSingleResult();
         System.out.println(count);
     }
 

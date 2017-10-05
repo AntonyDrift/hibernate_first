@@ -5,8 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Fetch;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.junit.Before;
@@ -54,5 +56,21 @@ public class JoinTest {
         criteria.where(cb.equal(employeeJoin.get("name"), "Yuli"));
         List<Department> departments = em.createQuery(criteria).getResultList();
         departments.forEach(System.out::println);
+    }
+
+    @Test
+    public void fetchTest() {
+        Integer age = 40;
+        EntityManager em = HibernateUtil.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Employee> criteria = cb.createQuery(Employee.class);
+        Root<Employee> employee = criteria.from(Employee.class);
+        employee.fetch("department");
+        ParameterExpression<Integer> ageParameter = cb.parameter( Integer.class );
+        criteria.where(cb.gt(employee.get("age"), ageParameter));
+        List<Employee> employees = em.createQuery(criteria)
+                .setParameter(ageParameter, age)
+                .getResultList();
+        employees.forEach(System.out::println);
     }
 }
