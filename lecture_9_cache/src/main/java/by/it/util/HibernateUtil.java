@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 
 public class HibernateUtil {
     private static final EntityManagerFactory emFactory;
-    private static final SessionFactory sessionFactory=null;
 
     /*
         EntityManager initialization
@@ -25,9 +24,5 @@ public class HibernateUtil {
         if (emFactory != null) {
             emFactory.close();
         }
-    }
-
-    public static void closeSessionFactory() {
-        sessionFactory.close();
     }
 }

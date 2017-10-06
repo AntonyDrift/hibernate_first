@@ -1,17 +1,10 @@
 package by.it;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.persistence.RollbackException;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,11 +13,11 @@ import by.it.entity.Employee;
 import by.it.util.HibernateUtil;
 
 /**
- * Class EhCacheTest
+ * Class LockTest
  *
- * Created by yslabko on 08/30/2017.
+ * Created by yslabko on 10/06/2017.
  */
-public class EhCacheTest {
+public class LockTest {
     @Before
     public void init() {
         Department developer = new Department("Developer");
@@ -47,22 +40,42 @@ public class EhCacheTest {
     }
 
     @Test
-    public void transactionTest() {
+    public void noLockModeTest() {
         EntityManager em = HibernateUtil.getEntityManager();
-        Department economist = new Department("Economist");
-        try {
-            em.getTransaction().begin();
-            em.persist(economist);
-            // Other business logic stuff
-            em.getTransaction().commit();
-        } catch (RollbackException e) {
-            em.getTransaction().rollback();
-        }
+        em.getTransaction().begin();
+        Employee employee = em.find(Employee.class, 3L);
+        employee.setLastname("Knuth");
+        em.getTransaction().commit();
         em.close();
     }
 
-    @AfterClass
-    public static void cleanUp() {
-        HibernateUtil.close();
+    @Test
+    public void optimisticLockModeTest() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+        Employee employee = em.find(Employee.class, 3L, LockModeType.OPTIMISTIC);
+        employee.setLastname("Knuth");
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    @Test
+    public void optimisticIncrementLockModeTest() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+        Employee employee = em.find(Employee.class, 3L, LockModeType.OPTIMISTIC_FORCE_INCREMENT);
+        employee.setLastname("Knuth");
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    @Test
+    public void lockModeReadTest() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+        Employee employee = em.find(Employee.class, 3L, LockModeType.PESSIMISTIC_WRITE);
+        employee.setLastname("Knuth");
+        em.getTransaction().commit();
+        em.close();
     }
 }

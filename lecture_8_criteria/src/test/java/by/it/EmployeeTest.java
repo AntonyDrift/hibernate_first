@@ -249,7 +249,6 @@ public class EmployeeTest {
         System.out.println(count);
     }
 
-
     @AfterClass
     public static void cleanUp() {
         HibernateUtil.close();

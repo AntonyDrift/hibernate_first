@@ -1,6 +1,8 @@
 package by.it;
 
 import javax.persistence.EntityManager;
+import javax.persistence.RollbackException;
+
 import org.hibernate.HibernateException;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -16,10 +18,10 @@ public class PersonTest {
             em.getTransaction().begin();
             em.persist(person);
             em.getTransaction().commit();
-        } catch (HibernateException e) {
+        } catch (RollbackException e) {
             em.getTransaction().rollback();
         } finally {
-//            em.close();
+            em.close();
         }
 
 //        em = HibernateUtil.getEntityManager();

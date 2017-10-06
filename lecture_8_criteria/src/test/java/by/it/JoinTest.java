@@ -11,12 +11,17 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 import org.junit.Before;
 import org.junit.Test;
 
 import by.it.entity.Department;
 import by.it.entity.Employee;
 import by.it.util.HibernateUtil;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Class JoinTest
@@ -72,5 +77,24 @@ public class JoinTest {
                 .setParameter(ageParameter, age)
                 .getResultList();
         employees.forEach(System.out::println);
+    }
+
+    @Test
+    public void nativeQueryTest() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        Session unwrap = em.unwrap(Session.class);
+        List<EmpWrapper> employees = unwrap.createNativeQuery("SELECT e.id as id, e.age as age FROM Employee e WHERE name = 'Paul'")
+                .setResultTransformer(Transformers.aliasToBean(EmpWrapper.class))
+                .getResultList();
+        employees.forEach(System.out::println);
+    }
+
+    @Data
+    public class EmpWrapper {
+        private Integer id;
+        private Integer age;
+
+        public EmpWrapper() {
+        }
     }
 }

@@ -4,6 +4,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
 
+import by.it.entity.Department;
 import by.it.entity.Employee;
 import by.it.util.EMUtil;
 
@@ -16,13 +17,17 @@ public class MappedSuperclassTest {
     @Test
     public void saveTest() throws InterruptedException {
         Employee employee = new Employee("Yulij", "Exadel", 15200.0);
+        Department department = new Department();
+        department.setDepartmentName("Crazy Staff");
+        department.getEmployees().add(employee);
 
         EntityManager em = EMUtil.getEntityManager("by.it.test");
         em.getTransaction().begin();
+        em.persist(department);
         em.persist(employee);
         em.getTransaction().commit();
         em.clear();
-        Employee employeeFromDb = em.find(Employee.class, 1L);
+        Employee employeeFromDb = em.find(Employee.class, 2L);
         System.out.println(employeeFromDb);
         em.getTransaction().begin();
         employeeFromDb.setSalary(20000.0);
