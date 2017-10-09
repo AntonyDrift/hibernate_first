@@ -3,6 +3,8 @@ package by.it;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -247,6 +249,25 @@ public class EmployeeTest {
         criteria.select(cb.sum(criteria.from(Employee.class).get("salary")));
         Number count =  em.createQuery(criteria).getSingleResult();
         System.out.println(count);
+    }
+
+    @Test
+    public void orderByTest() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Tuple> criteria = cb.createQuery( Tuple.class );
+        Root<Employee> employee = criteria.from(Employee.class );
+
+        criteria.groupBy(employee.get("name"));
+        criteria.multiselect(employee.get("name"), cb.count(employee));
+        criteria.where(cb.equal(employee.get("name"), "Yuli"));
+
+        List<Tuple> tuples = em.createQuery( criteria ).getResultList();
+        tuples.forEach(t->{
+            String name = (String) t.get( 0 );
+            int count = (int) t.get( 1 );
+            System.out.println("Name:" + name + " count:" + count);
+        });
     }
 
     @AfterClass

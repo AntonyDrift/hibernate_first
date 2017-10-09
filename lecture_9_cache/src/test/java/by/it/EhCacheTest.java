@@ -63,6 +63,6 @@ public class EhCacheTest {
 
     @AfterClass
     public static void cleanUp() {
-        HibernateUtil.close();
+        HibernateUtil.closeEMFactory();
     }
 }

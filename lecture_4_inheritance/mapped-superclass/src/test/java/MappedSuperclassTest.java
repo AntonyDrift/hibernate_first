@@ -32,7 +32,6 @@ public class MappedSuperclassTest {
         em.getTransaction().begin();
         employeeFromDb.setSalary(20000.0);
         Thread.sleep(10);
-        em.merge(employeeFromDb);
         em.getTransaction().commit();
         System.out.println(employeeFromDb);
     }
