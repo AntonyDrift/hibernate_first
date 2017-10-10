@@ -19,9 +19,10 @@ public class OneToOneTest {
         EntityManager em = EMUtil.getEntityManager("by.it.test");
         em.getTransaction().begin();
         Employee employee = new Employee(null, "Yulij", "Slabko", null, null);
-        EmployeeDetail employeeDetail = new EmployeeDetail(null, "Sadovaya", "Minsk", "", "Belarus", employee);
+        EmployeeDetail employeeDetail = new EmployeeDetail(null, "Sadovaya", "Minsk", "",
+                "Belarus", employee);
         em.persist(employee);
-        em.persist(employeeDetail);
+        employee.setEmployeeDetail(employeeDetail);
         em.getTransaction().commit();
         em.clear();
         Employee employeeFromDb = em.find(Employee.class, 1L);

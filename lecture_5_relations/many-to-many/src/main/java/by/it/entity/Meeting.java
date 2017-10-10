@@ -1,19 +1,22 @@
 package by.it.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
-import org.hibernate.annotations.CreationTimestamp;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "MEETING")
 public class Meeting implements Serializable {
@@ -26,8 +29,8 @@ public class Meeting implements Serializable {
     @CreationTimestamp
     @Column(name = "DATE")
     private LocalDateTime startDate;
-    @ManyToMany(mappedBy = "meetings")
-    private Set<Employee> employees = new HashSet<Employee>();
+    @ManyToMany(mappedBy = "meetings", cascade = CascadeType.ALL)
+    private List<Employee> employees = new ArrayList<>();
 
     public Meeting(String subject) {
         this.subject = subject;
@@ -53,5 +56,14 @@ public class Meeting implements Serializable {
         result = 31 * result + (subject != null ? subject.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Meeting{" +
+                "meetingId=" + meetingId +
+                ", subject='" + subject + '\'' +
+                ", startDate=" + startDate +
+                '}';
     }
 }

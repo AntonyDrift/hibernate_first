@@ -15,4 +15,14 @@ public class Book {
     @Id @GeneratedValue
     private Long id;
     private String title;
+    @ManyToOne
+    private Author author;
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
 }

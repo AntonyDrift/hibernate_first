@@ -7,9 +7,12 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 
 @Data @NoArgsConstructor @AllArgsConstructor
@@ -37,7 +40,7 @@ public class Employee {
     @JoinTable(name = "EMPLOYEE_MEETING", joinColumns = {@JoinColumn(name = "EMPLOYEE_ID")},
             inverseJoinColumns = {@JoinColumn(name = "MEETING_ID")}
     )
-    private Set<Meeting> meetings = new HashSet<>(0);
+    private List<Meeting> meetings = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
@@ -59,5 +62,15 @@ public class Employee {
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

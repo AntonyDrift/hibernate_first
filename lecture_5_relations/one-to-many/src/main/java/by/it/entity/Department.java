@@ -24,8 +24,8 @@ public class Department {
     private Long departmentId;
     @Column(name = "NAME")
     private String departmentName;
-    @OneToMany(mappedBy = "department", orphanRemoval = true, cascade = CascadeType.REMOVE)
-//    @BatchSize(size = 3)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "department", orphanRemoval = true)
+    @BatchSize(size = 3)
     private List<Employee> employees = new ArrayList<>(0);
 
     public Department(String name) {

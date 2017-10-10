@@ -19,8 +19,8 @@ public class Author {
     private String name;
 //    @OrderBy("title desc")
 //    @OrderColumn(name="order_id")
-//@org.hibernate.annotations.OrderBy(clause = "CHAR_LENGTH(title) desc")
-    @OneToMany(/*mappedBy = "author",*/ cascade = CascadeType.ALL)
+@org.hibernate.annotations.OrderBy(clause = "CHAR_LENGTH(title) desc")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
     private List<Book> books;
 
     @Override

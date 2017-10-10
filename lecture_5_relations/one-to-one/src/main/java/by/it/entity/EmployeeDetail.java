@@ -11,14 +11,14 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "EMPLOYEE_DETAILS")
-public class EmployeeDetail implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class EmployeeDetail {
     @Id
     @GenericGenerator(name = "one-one",
             strategy = "foreign",
@@ -40,7 +40,7 @@ public class EmployeeDetail implements Serializable {
     private String country;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
-    @Access(AccessType.PROPERTY)
+    @JoinColumn
     private Employee employee;
+
 }

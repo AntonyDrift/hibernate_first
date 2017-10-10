@@ -57,12 +57,16 @@ public class OneToManyTest {
         em.persist(department);
         Employee employee = new Employee(null, "Yulij", "Slabko", null, null, department);
         EmployeeDetail employeeDetail = new EmployeeDetail(null, "Sadovaya", "Minsk", "", "Belarus", employee);
+        department.getEmployees().add(employee);
         employee.setEmployeeDetail(employeeDetail);
         em.persist(employee);
         em.getTransaction().commit();
         em.clear();
+        em.getTransaction().begin();
+        department = em.find(Department.class, department.getDepartmentId());
         department.getEmployees().remove(0);
-        em.merge(department);
+        em.persist(department);
+        em.getTransaction().commit();
         em.close();
     }
 
