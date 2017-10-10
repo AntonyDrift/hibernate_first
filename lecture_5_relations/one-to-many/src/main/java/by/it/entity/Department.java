@@ -24,9 +24,9 @@ public class Department {
     private Long departmentId;
     @Column(name = "NAME")
     private String departmentName;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "department", orphanRemoval = true)
-    @BatchSize(size = 3)
-    private List<Employee> employees = new ArrayList<>(0);
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @BatchSize(size = 3)
+    private List<Employee> employees = new ArrayList<>();
 
     public Department(String name) {
         this.departmentName = name;
@@ -46,5 +46,10 @@ public class Department {
         int result = departmentId != null ? departmentId.hashCode() : 0;
         result = 31 * result + (departmentName != null ? departmentName.hashCode() : 0);
         return result;
+    }
+
+    public void removeEmployee(Employee employee) {
+        employees.remove(employee);
+        employee.setDepartment(null);
     }
 }

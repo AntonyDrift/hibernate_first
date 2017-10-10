@@ -7,9 +7,17 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>lecture_9_cache</artifactId>
+    <artifactId>lecture_9.2_envers</artifactId>
     <packaging>jar</packaging>
 
-    <name>lecture_9_cache</name>
+    <name>lecture_9.2_envers</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-envers</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

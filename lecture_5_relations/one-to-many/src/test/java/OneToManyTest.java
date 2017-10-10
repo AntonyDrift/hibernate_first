@@ -25,7 +25,7 @@ public class OneToManyTest {
 
     @Before
     public void init() {
-        EntityManager em = EMUtil.getEntityManager("by.it.test");
+        EntityManager em = EMUtil.getEntityManager("by.it");
         em.getTransaction().begin();
         Department qa = new Department("QA");
         Department ba = new Department("BA");
@@ -51,21 +51,16 @@ public class OneToManyTest {
 
     @Test
     public void saveTest() {
-        EntityManager em = EMUtil.getEntityManager("by.it.test");
+        EntityManager em = EMUtil.getEntityManager();
         em.getTransaction().begin();
         Department department = new Department("SD");
-        em.persist(department);
         Employee employee = new Employee(null, "Yulij", "Slabko", null, null, department);
-        EmployeeDetail employeeDetail = new EmployeeDetail(null, "Sadovaya", "Minsk", "", "Belarus", employee);
         department.getEmployees().add(employee);
+        EmployeeDetail employeeDetail = new EmployeeDetail(null, "Sadovaya", "Minsk", "", "Belarus", employee);
         employee.setEmployeeDetail(employeeDetail);
-        em.persist(employee);
-        em.getTransaction().commit();
-        em.clear();
-        em.getTransaction().begin();
-        department = em.find(Department.class, department.getDepartmentId());
-        department.getEmployees().remove(0);
         em.persist(department);
+        em.flush();
+        department.removeEmployee(employee);
         em.getTransaction().commit();
         em.close();
     }

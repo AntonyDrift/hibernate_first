@@ -6,7 +6,7 @@ import javax.persistence.Persistence;
 
 import org.hibernate.SessionFactory;
 
-public class HibernateUtil {
+public class EmUtils {
     private static EntityManagerFactory emFactory=null;
 
     public static EntityManager getEntityManager() {
