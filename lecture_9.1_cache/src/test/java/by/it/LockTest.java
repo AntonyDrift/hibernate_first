@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import java.util.HashMap;
 
 /**
  * Class LockTest
@@ -88,7 +89,25 @@ public class LockTest {
             updatedCat.setName("Updated Cat");
             entityManager.getTransaction().commit();
         }).start();
-        Thread.sleep(500);
+        Thread.sleep(200);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+@Test
+    public void optimisticLockDirtyModeExceptionTest() throws InterruptedException {
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+        CatLockDirty cat = em.find(CatLockDirty.class, 1L);
+        cat.setName("New");
+        new Thread(()-> {
+            EntityManager entityManager = HibernateUtil.getEntityManager();
+            entityManager.getTransaction().begin();
+            CatLockDirty updatedCat = entityManager.find(CatLockDirty.class, 1L);
+            updatedCat.setOwner("UpdatedOwner");
+            entityManager.getTransaction().commit();
+        }).start();
+        Thread.sleep(200);
         em.getTransaction().commit();
         em.close();
     }
@@ -135,16 +154,17 @@ public class LockTest {
     public void pessimisticLockModeExceptionTest() throws InterruptedException {
         EntityManager em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
-        Cat cat = em.find(Cat.class, 1L, LockModeType.PESSIMISTIC_READ);
+        Cat cat = em.find(Cat.class, 1L, LockModeType.PESSIMISTIC_WRITE);
         cat.setName("New");
         new Thread(()-> {
             EntityManager entityManager = HibernateUtil.getEntityManager();
             entityManager.getTransaction().begin();
-            Cat updatedCat = entityManager.find(Cat.class, 1L);
+            Cat updatedCat = entityManager.find(Cat.class, 1L, LockModeType.PESSIMISTIC_WRITE,
+                    new HashMap<String, Object>(){{put("javax.persistence.lock.timeout", 0);}});
             updatedCat.setName("Updated Cat");
             entityManager.getTransaction().commit();
         }).start();
-        Thread.sleep(10);
+        Thread.sleep(500);
         em.getTransaction().commit();
         em.clear();
         System.out.println(em.find(Cat.class, 1L));

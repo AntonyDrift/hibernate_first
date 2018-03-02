@@ -95,7 +95,8 @@ public class HQLTest {
     @Test
     public void parameterOrderTest() {
         EntityManager em = EMUtil.getEntityManager();
-        javax.persistence.Query query = em.createQuery("from Employee e where e.name=? and e.salary > :salary");
+        javax.persistence.Query query = em.createQuery(
+                "from Employee e where e.name=? and e.salary > :salary");
         query.setParameter(0, "Yulij")
                 .setParameter("salary", 5000)
                 .getResultList().forEach(System.out::println);

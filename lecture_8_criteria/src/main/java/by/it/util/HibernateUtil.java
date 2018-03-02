@@ -7,27 +7,20 @@ import javax.persistence.Persistence;
 import org.hibernate.SessionFactory;
 
 public class HibernateUtil {
-    private static final EntityManagerFactory emFactory;
-    private static final SessionFactory sessionFactory=null;
-
-    /*
-        EntityManager initialization
-     */
-    static {
-        emFactory = Persistence.createEntityManagerFactory("by.it");
-    }
+    private static EntityManagerFactory emFactory=null;
 
     public static EntityManager getEntityManager() {
+        return getEntityManager("by.it");
+    }
+
+    public static EntityManager getEntityManager(String unit) {
+        if (emFactory == null) {
+            emFactory  = Persistence.createEntityManagerFactory(unit);
+        }
         return emFactory.createEntityManager();
     }
 
-    public static void close() {
-        if (emFactory != null) {
-            emFactory.close();
-        }
-    }
-
-    public static void closeSessionFactory() {
-        sessionFactory.close();
+    public static void closeEMFactory() {
+        emFactory.close();
     }
 }

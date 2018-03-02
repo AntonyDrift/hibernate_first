@@ -9,12 +9,14 @@ import javax.persistence.*;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Cacheable
 @Table(name = "MEETING")
+@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Meeting implements Serializable {
     private static final long serialVersionUID = 8L;
 

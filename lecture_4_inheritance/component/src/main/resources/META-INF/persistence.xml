@@ -5,6 +5,7 @@
     <persistence-unit name="by.it" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>by.it.entity.Employee</class>
+        <class>by.it.entity.Cat</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
@@ -13,8 +14,8 @@
             <property name="javax.persistence.jdbc.password" value="yuli"/>
             <property name="hibernate.dialect.storage_engine" value="innodb"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.use_sql_comments" value="true"/>
-            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.use_sql_comments" value="false"/>
+            <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.connection.pool_size" value="10"/>
         </properties>
     </persistence-unit>

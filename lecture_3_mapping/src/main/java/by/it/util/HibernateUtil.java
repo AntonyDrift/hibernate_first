@@ -15,6 +15,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import by.it.entity.Cat;
 import by.it.entity.Person;
 
 public class HibernateUtil {
@@ -52,7 +53,8 @@ public class HibernateUtil {
 
         // Create MetadataSources
         MetadataSources sources = new MetadataSources(serviceRegistry);
-        sources.addAnnotatedClass(Person.class);
+//        sources.addAnnotatedClass(Person.class);
+//        sources.addAnnotatedClass(Cat.class);
 
         // Create Metadata
         Metadata metadata = sources.getMetadataBuilder().build();

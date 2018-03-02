@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -23,6 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "EMPLOYEE_DETAILS")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class EmployeeDetail implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

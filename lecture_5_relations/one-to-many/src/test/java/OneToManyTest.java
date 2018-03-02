@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.OneToMany;
 
+import net.sf.ehcache.hibernate.HibernateUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.AfterClass;
@@ -60,7 +61,12 @@ public class OneToManyTest {
         employee.setEmployeeDetail(employeeDetail);
         em.persist(department);
         em.flush();
-        department.removeEmployee(employee);
+        em.getTransaction().commit();
+        em = EMUtil.getEntityManager();
+        em.getTransaction().begin();
+        department = em.find(Department.class, department.getDepartmentId());
+        Employee forDelete = department.getEmployees().iterator().next();
+        department.getEmployees().remove(forDelete);
         em.getTransaction().commit();
         em.close();
     }

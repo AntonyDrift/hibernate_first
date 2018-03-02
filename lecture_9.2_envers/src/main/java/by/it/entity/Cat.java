@@ -23,18 +23,15 @@ import javax.persistence.TemporalType;
  */
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
+@Audited
 public class Cat {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Audited
     private Long id;
-    @Audited
     private String name;
-    @Audited
     private String owner;
     private String color;
-    @Audited
     private int age;
     @UpdateTimestamp
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 }

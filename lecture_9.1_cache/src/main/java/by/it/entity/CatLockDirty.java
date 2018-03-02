@@ -19,7 +19,7 @@ import javax.persistence.Id;
 @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
 @DynamicUpdate
-@SelectBeforeUpdate
+//@SelectBeforeUpdate
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 public class CatLockDirty {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

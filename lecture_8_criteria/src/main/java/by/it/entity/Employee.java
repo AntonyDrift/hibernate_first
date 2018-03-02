@@ -1,13 +1,11 @@
 package by.it.entity;
 
-import java.io.Serializable;
-
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -18,11 +16,8 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
     private String name;
-    @Column
     private Integer age;
-    @Column
     private double salary;
     @ManyToOne
     @JoinColumn(name = "DEPARTMENT_ID", nullable = false)

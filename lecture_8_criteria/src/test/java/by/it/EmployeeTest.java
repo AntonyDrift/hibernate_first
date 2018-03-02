@@ -1,25 +1,17 @@
 package by.it;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
-import javax.persistence.Tuple;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
+import by.it.entity.Department;
+import by.it.entity.Employee;
+import by.it.util.HibernateUtil;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import by.it.entity.Department;
-import by.it.entity.Employee;
-import by.it.util.HibernateUtil;
+import javax.persistence.EntityManager;
+import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.List;
 
 /**
  * Class EmployeeTest
@@ -61,7 +53,7 @@ public class EmployeeTest {
         CriteriaQuery<Employee> criteria = cb.createQuery(Employee.class);
         Root<Employee> emp = criteria.from(Employee.class);
         criteria.select(emp)
-                .where(cb.equal(emp.get("name"), "Yuli"));
+                .where(cb.equal(emp.get("name"), "sd"));
         List<Employee> employees = em.createQuery(criteria).getResultList();
         employees.forEach(System.out::println);
     }
@@ -272,6 +264,6 @@ public class EmployeeTest {
 
     @AfterClass
     public static void cleanUp() {
-        HibernateUtil.close();
+        HibernateUtil.closeEMFactory();
     }
 }

@@ -13,7 +13,7 @@ import by.it.util.EmUtils;
 
 /**
  * Class LockTest
- *
+ * <p>
  * Created by yslabko on 10/06/2017.
  */
 public class CatTest {
@@ -34,13 +34,21 @@ public class CatTest {
         Cat cat = em.find(Cat.class, 1L);
         cat.setOwner("Lisa");
         em.flush();
-        cat.setOwner("Tanay");
+        em.getTransaction().commit();
+        em.getTransaction().begin();
+        cat.setOwner("Tanya");
         em.flush();
         cat.setAge(3);
         em.flush();
         em.getTransaction().commit();
         List<Number> revisions = AuditReaderFactory.get(em).getRevisions(Cat.class, 1L);
         System.out.println(revisions);
+        for (Number revision : revisions) {
+            System.out.println(AuditReaderFactory.get(em)
+                    .createQuery()
+                    .forEntitiesAtRevision(Cat.class, revision).getSingleResult());
+        }
+
         em.close();
-    }    
+    }
 }
