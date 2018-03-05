@@ -30,6 +30,8 @@ public class SFUtil {
         settings.put(Environment.PASS, "yuli");
         settings.put(Environment.HBM2DDL_AUTO, "create-drop");
         settings.put(Environment.SHOW_SQL, "true");
+        settings.put(Environment.USE_SQL_COMMENTS, "false");
+        settings.put(Environment.FORMAT_SQL, "false");
         settings.put(Environment.ISOLATION, "2");
         settings.put(Environment.STORAGE_ENGINE, "innodb");
         // Apply settings
